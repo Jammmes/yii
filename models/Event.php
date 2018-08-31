@@ -13,6 +13,7 @@ use Yii;
  * @property string $end_at Окончание события
  * @property string $created_at Запись создана
  * @property string $updated_at Запись  изменена
+ * @property int $user_id ИД пользователя
  */
 class Event extends \yii\db\ActiveRecord
 {
@@ -47,6 +48,15 @@ class Event extends \yii\db\ActiveRecord
             'end_at' => 'Окончание события',
             'created_at' => 'Запись создана',
             'updated_at' => 'Запись  изменена',
+
         ];
+    }
+
+    /**
+     * return ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(),['id'=>'user-id']);
     }
 }
