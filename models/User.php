@@ -8,6 +8,7 @@ use yii\helpers\BaseArrayHelper;
 
 class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
+    public static $username;
 
     /**
      * @return array
@@ -21,6 +22,19 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         ],
         parent::rules()
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ИД',
+            'username' => 'Имя пользователя',
+            'password' => 'Пароль',
+
+        ];
     }
 
     public static function tableName()

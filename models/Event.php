@@ -48,6 +48,7 @@ class Event extends \yii\db\ActiveRecord
             'end_at' => 'Окончание события',
             'created_at' => 'Запись создана',
             'updated_at' => 'Запись  изменена',
+            'user_id' => 'ИД пользователя',
 
         ];
     }
@@ -57,6 +58,6 @@ class Event extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(),['id'=>'user-id']);
+        return $this->hasOne(User::className(),['id'=>'user_id']);
     }
 }

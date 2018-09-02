@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Event */
+/* @var $model app\models\Access */
 
-$this->title = 'Новое событие';
-$this->params['breadcrumbs'][] = ['label' => 'События', 'url' => ['index']];
+$this->title = 'Create Access';
+$this->params['breadcrumbs'][] = ['label' => 'Accesses', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="event-create">
+<div class="access-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
