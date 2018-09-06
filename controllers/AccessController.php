@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Access;
 use app\models\search\AccessSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -25,6 +26,13 @@ class AccessController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                 ],
+            ],
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index'],
+                'rules' => [
+                    ['allow' => true, 'roles' => ['@']],
+                ]
             ],
         ];
     }

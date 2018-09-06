@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Event;
 use app\models\search\EventSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,6 +27,13 @@ class EventController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index'],
+                'rules' => [
+                    ['allow' => true, 'roles' => ['@']],
+                ]
+                ],
         ];
     }
 
