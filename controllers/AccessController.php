@@ -29,7 +29,7 @@ class AccessController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['index'],
+                'only' => ['index','create','update','delete'],
                 'rules' => [
                     ['allow' => true, 'roles' => ['@']],
                 ]
