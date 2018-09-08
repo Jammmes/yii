@@ -52,4 +52,22 @@ class Access extends \yii\db\ActiveRecord
     {
         return new AccessQuery(get_called_class());
     }
+
+    /**
+     * return ActiveQuery
+     */
+    public function getEvent()
+    {
+        return $this->hasOne(Event::class, ['id' => 'event_id']);
+    }
+
+    /**
+     * return ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+
 }

@@ -120,10 +120,10 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     }
 
     /**
-     * {@inheritdoc}
+     * return ActiveQuery
      */
     public function getEvent()
     {
-        return $this->hasMany(Event::className(),['id'=>'user_id']);
+        return $this->hasMany(Event::class,['id'=>'user_id']);
     }
 }

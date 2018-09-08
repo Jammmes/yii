@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\objects\EventAccessChecker;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\EventSearch */
@@ -9,6 +10,11 @@ use yii\grid\GridView;
 
 $this->title = 'События';
 $this->params['breadcrumbs'][] = $this->title;
+
+$isAllowedToWriteCallback = function (app\models\Event $event) {
+    return (new \app\objects\EventAccessChecker())->isAllowedToWrite($event);
+};
+
 ?>
 <div class="event-index">
 
@@ -42,7 +48,16 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn'
+                ,
+                'visibleButtons' => [
+                    'view' => function (\app\models\Event $model) {
+                        return (new EventAccessChecker())->isAllowedToRead($model);
+                    },
+                    'update' => $isAllowedToWriteCallback,
+                    'delete' => $isAllowedToWriteCallback,
+                ],
+            ],
 
         ],
     ]); ?>

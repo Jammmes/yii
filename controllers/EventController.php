@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\behaviors\EventAccessBehavior;
 use Yii;
 use app\models\Event;
 use app\models\search\EventSearch;
@@ -22,9 +23,16 @@ class EventController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'eventAccess' => [
+                'class' => EventAccessBehavior::class,
+                'except' => ['index','list'],
+                'rules' => [
+                    ['allow' => true, 'roles' => ['@']],
                 ],
             ],
             'access' => [
