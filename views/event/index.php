@@ -2,11 +2,14 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\Event;
 use app\objects\EventAccessChecker;
+use app\objects\viewModels\EventView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\EventSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $viewModel EventView */
 
 $this->title = 'События';
 $this->params['breadcrumbs'][] = $this->title;
@@ -33,6 +36,13 @@ $isAllowedToWriteCallback = function (app\models\Event $event) {
 
             'id',
             'name',
+            [
+                'label' => "Автор",
+                'format' => 'raw',
+                'value' => function (Event $model) use ($viewModel) {
+                    return $viewModel->getUserLink($model);
+                }
+            ],
             [
                 'attribute' => 'start_at',
                 'format' =>  ['date', 'dd.MM.YYYY HH:mm:ss'],

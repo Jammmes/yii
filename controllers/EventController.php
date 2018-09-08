@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\behaviors\EventAccessBehavior;
+use app\objects\viewModels\EventView;
 use Yii;
 use app\models\Event;
 use app\models\search\EventSearch;
@@ -53,10 +54,30 @@ class EventController extends Controller
     {
         $searchModel = new EventSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $viewModel = new EventView();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'viewModel' => $viewModel,
+        ]);
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function actionList()
+    {
+        $searchModel = new EventSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $viewModel = new EventView();
+
+        return $this->render('list', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'viewModel' => $viewModel,
         ]);
     }
 
@@ -101,6 +122,9 @@ class EventController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        if (!(new EventAccessChecker)->isAllowedToWrite($model)) {
+            throw new ForbiddenHttpException('У Вас нет доступа к созданию события');
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -120,7 +144,13 @@ class EventController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if (!(new EventAccessChecker)->isAllowedToWrite($model)) {
+            throw new ForbiddenHttpException('У Вас нет доступа к удалению события');
+        }
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }

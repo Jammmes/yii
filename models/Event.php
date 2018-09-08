@@ -53,6 +53,23 @@ class Event extends \yii\db\ActiveRecord
         ];
     }
 
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if (!$this->user_id) {
+            $this->user_id = \Yii::$app->user->getId();
+        }
+
+        return true;
+    }
+
     /**
      * return ActiveQuery
      */
