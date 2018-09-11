@@ -11,6 +11,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\HttpCache;
 
 /**
  * EventController implements the CRUD actions for Event model.
@@ -43,6 +44,16 @@ class EventController extends Controller
                     ['allow' => true, 'roles' => ['@']],
                 ]
                 ],
+            'httpCache' => [
+                'class' => HttpCache::class,
+                'only' => ['view'],
+                'lastModified' => function () {
+                    $id = \Yii::$app->request->get('id');
+                    $model = $this->findModel($id);
+
+                    return $model ? \strtotime($model->updated_at) : 0;
+                }
+            ]
         ];
     }
 

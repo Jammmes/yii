@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
+    <?php if ($this->beginCache('view_detail_index', ['durations' => 60])):?>
 
     <?= DetailView::widget([
         'model' => $model,
@@ -37,4 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+    <?php $this->endCache();?>
+    <?php endif;?>
 </div>

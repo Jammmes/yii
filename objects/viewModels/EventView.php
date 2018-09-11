@@ -35,7 +35,7 @@ class EventView
      */
     public function getUserLink(Event $model): string
     {
-        return Html::a($model->getUser(), ['user/view', 'id' => $model->user_id]);
+        return Html::a($model->user->username, ['user/view', 'id' => $model->user_id]);
     }
 
     /**

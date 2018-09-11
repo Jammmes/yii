@@ -27,7 +27,7 @@ $isAllowedToWriteCallback = function (app\models\Event $event) {
     <p>
         <?= Html::a('Новое событие', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
+    <?php if ($this->beginCache('view_event_index'. \yii::$app->user->getId(), $viewModel->getCacheParams())):?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -37,7 +37,7 @@ $isAllowedToWriteCallback = function (app\models\Event $event) {
             'id',
             'name',
             [
-                'label' => "Автор",
+                'label' => "Автор события",
                 'format' => 'raw',
                 'value' => function (Event $model) use ($viewModel) {
                     return $viewModel->getUserLink($model);
@@ -51,11 +51,7 @@ $isAllowedToWriteCallback = function (app\models\Event $event) {
                 'attribute' => 'end_at',
                 'format' =>  ['date', 'dd.MM.YYYY HH:mm:ss'],
             ],
-            [
-                'attribute' => 'user.username',
-                'label' => 'Автор события',
-                'format' => 'text',
-            ],
+
 
 
             ['class' => 'yii\grid\ActionColumn'
@@ -71,4 +67,6 @@ $isAllowedToWriteCallback = function (app\models\Event $event) {
 
         ],
     ]); ?>
+        <?php $this->endCache();?>
+    <?php endif;?>
 </div>

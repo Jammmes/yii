@@ -43,6 +43,8 @@ class EventSearch extends Event
     {
         $query = Event::find();
 
+        $query->cache(3600);
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([

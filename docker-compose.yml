@@ -30,3 +30,10 @@ services:
       PMA_PORT: 3306
     ports:
     - '8080:80'
+
+  redis:
+      image: 'bitnami/redis:latest'
+      environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      ports:
+      - '6379:6379'
